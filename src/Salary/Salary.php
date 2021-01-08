@@ -20,7 +20,7 @@ final class Salary
         return $this->gross;
     }
 
-    public function setGross(float $gross)
+    public function setGross(float $gross): Salary
     {
         if ($gross < 0) {
             $gross = 0;
@@ -49,5 +49,10 @@ final class Salary
         $salary = (clone $this);
         $salary->tax = $tax;
         return $salary;
+    }
+
+    public function getNetPay(): float
+    {
+        return round($this->gross * (100 - $this->tax) / 100, 2);
     }
 }

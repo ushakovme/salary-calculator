@@ -10,7 +10,6 @@ class CountryTaxRule implements RuleInterface
 {
     public function handle(Salary $initialSalary, EmployeeParameters $parameters): Salary
     {
-        $tax = $initialSalary->getTax() + 20;
-        return $initialSalary->setTax($tax);
+        return $initialSalary->addTax(20, 'country tax');
     }
 }

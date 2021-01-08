@@ -65,7 +65,25 @@ final class Salary
         return $this->tax;
     }
 
-    public function setTax(float $tax): Salary
+    public function addTax(float $delta, string $description): Salary
+    {
+        $newTax = $this->tax + $delta;
+        $salary = $this->setTax($newTax);
+        $salary->addLogMessage('Tax + ' . $delta . ': ' . $description);
+
+        return $salary;
+    }
+
+    public function subtractTax(float $delta, string $description): Salary
+    {
+        $newTax = $this->tax - $delta;
+        $salary = $this->setTax($newTax);
+        $salary->addLogMessage('Tax - ' . $delta . ': ' . $description);
+
+        return $salary;
+    }
+
+    private function setTax(float $tax): Salary
     {
         if ($tax < 0) {
             $tax = 0;

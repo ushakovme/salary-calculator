@@ -14,7 +14,7 @@ class KidsRuleTest extends TestCase
     {
         $rule = new KidsRule();
         $initialGross = 1000;
-        $initialSalary = (new Salary($initialGross))->setTax(10);
+        $initialSalary = new Salary($initialGross, 10);
 
         $params = new EmployeeParameters(20);
         $params->setKids(5);
@@ -29,8 +29,7 @@ class KidsRuleTest extends TestCase
     {
         $rule = new KidsRule();
         $initialGross = 1000;
-        $initialSalary = new Salary($initialGross);
-        $initialSalary->setTax(10);
+        $initialSalary = new Salary($initialGross, 10);
 
         $params = new EmployeeParameters(20);
         $params->setKids(0);

@@ -8,19 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class SalaryTest extends TestCase
 {
-    public function testSetsTax()
-    {
-        $initialTax = 0;
-        $salary = new Salary(5, $initialTax);
-
-        $this->assertEquals($initialTax, $salary->getTax());
-
-        $newTax = 50;
-        $salary = $salary->setTax($newTax);
-        $this->assertEquals($newTax, $salary->getTax());
-    }
-
-
     public function testAddGross()
     {
         $salary = new Salary(100);
@@ -43,6 +30,30 @@ class SalaryTest extends TestCase
 
         $this->assertInstanceOf(Salary::class, $newSalary);
         $this->assertEquals($salary->getGross() - $delta, $newSalary->getGross());
+    }
+
+    public function testAddTax()
+    {
+        $salary = new Salary(100, 10);
+        $delta = 5;
+        $description = 'new tax';
+        $newSalary = $salary->addTax($delta, $description);
+
+        $this->assertInstanceOf(Salary::class, $newSalary);
+        $this->assertEquals($salary->getTax() + $delta, $newSalary->getTax());
+        $log = $newSalary->getLog();
+        $this->assertCount(1, $log);
+        $this->assertStringContainsString($description, $log[0]);
+    }
+
+    public function testSubtractTax()
+    {
+        $salary = new Salary(100, 10);
+        $delta = 5;
+        $newSalary = $salary->subtractTax($delta, 'remove tax');
+
+        $this->assertInstanceOf(Salary::class, $newSalary);
+        $this->assertEquals($salary->getTax() - $delta, $newSalary->getTax());
     }
 
 }

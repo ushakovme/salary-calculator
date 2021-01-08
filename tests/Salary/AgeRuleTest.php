@@ -27,7 +27,7 @@ class AgeRuleTest extends TestCase
     {
         $salary = $this->rule->handle($this->initialSalary, new EmployeeParameters(51));
 
-        $this->assertEquals($this->initialSalary->getGross() * 0.07, $salary->getGross());
+        $this->assertEquals($this->initialSalary->getGross() * 1.07, $salary->getGross());
         $this->assertEquals($this->initialSalary->getTax(), $salary->getTax());
     }
 

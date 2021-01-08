@@ -11,8 +11,8 @@ class AgeRule implements RuleInterface
     public function handle(Salary $initialSalary, EmployeeParameters $parameters): Salary
     {
         if ($parameters->getAge() > 50) {
-            $gross = round($initialSalary->getGross() * 1.07, 2);
-            return $initialSalary->setGross($gross);
+            $additional = $initialSalary->getGross() * 0.07;
+            return $initialSalary->addGross($additional, 'age is bigger than 50');
         }
 
         return $initialSalary;

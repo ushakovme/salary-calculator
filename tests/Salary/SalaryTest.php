@@ -8,18 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class SalaryTest extends TestCase
 {
-    public function testSetsGross()
-    {
-        $initialGross = 100;
-        $salary = new Salary($initialGross);
-
-        $this->assertEquals($initialGross, $salary->getGross());
-
-        $newGross = 200;
-        $salary = $salary->setGross($newGross);
-        $this->assertEquals($newGross, $salary->getGross());
-    }
-
     public function testSetsTax()
     {
         $initialTax = 0;
@@ -32,15 +20,29 @@ class SalaryTest extends TestCase
         $this->assertEquals($newTax, $salary->getTax());
     }
 
-    public function testImmutable()
+
+    public function testAddGross()
     {
         $salary = new Salary(100);
-        $newSalaryByGross = $salary->setGross(200);
-        $newSalaryByTax = $salary->setTax(5);
+        $delta = 50;
+        $description = 'new year bonus';
+        $newSalary = $salary->addGross($delta, $description);
 
-        $this->assertInstanceOf(Salary::class, $newSalaryByGross);
-        $this->assertNotEquals($salary, $newSalaryByGross);
-        $this->assertNotEquals($salary, $newSalaryByTax);
+        $this->assertInstanceOf(Salary::class, $newSalary);
+        $this->assertEquals($salary->getGross() + $delta, $newSalary->getGross());
+        $log = $newSalary->getLog();
+        $this->assertCount(1, $log);
+        $this->assertStringContainsString($description, $log[0]);
+    }
+
+    public function testSubtractGross()
+    {
+        $salary = new Salary(100);
+        $delta = 50;
+        $newSalary = $salary->subtractGross($delta, 'deduction');
+
+        $this->assertInstanceOf(Salary::class, $newSalary);
+        $this->assertEquals($salary->getGross() - $delta, $newSalary->getGross());
     }
 
 }

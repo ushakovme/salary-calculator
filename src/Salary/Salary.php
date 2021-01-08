@@ -8,6 +8,7 @@ final class Salary
 {
     private float $gross;
     private float $tax;
+    private array $log = [];
 
     public function __construct(float $gross, float $tax = 0)
     {
@@ -15,12 +16,40 @@ final class Salary
         $this->tax = $tax;
     }
 
+    public function getLog(): array
+    {
+        return $this->log;
+    }
+
+    private function addLogMessage(string $message)
+    {
+        $this->log[] = $message;
+    }
+
     public function getGross(): float
     {
         return $this->gross;
     }
 
-    public function setGross(float $gross): Salary
+    public function addGross(float $delta, string $description): Salary
+    {
+        $newGross = $this->gross + $delta;
+        $salary = $this->setGross($newGross);
+        $salary->addLogMessage('Gross + ' . $delta . ': ' . $description);
+
+        return $salary;
+    }
+
+    public function subtractGross(float $delta, string $description): Salary
+    {
+        $newGross = $this->gross - $delta;
+        $salary = $this->setGross($newGross);
+        $salary->addLogMessage('Gross - ' . $delta . ': ' . $description);
+
+        return $salary;
+    }
+
+    private function setGross(float $gross): Salary
     {
         if ($gross < 0) {
             $gross = 0;

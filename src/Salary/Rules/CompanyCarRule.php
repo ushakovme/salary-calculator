@@ -11,8 +11,7 @@ class CompanyCarRule implements RuleInterface
     public function handle(Salary $initialSalary, EmployeeParameters $parameters): Salary
     {
         if ($parameters->usesCompanyCar()) {
-            $gross = $initialSalary->getGross() - 500;
-            return $initialSalary->setGross($gross);
+            return $initialSalary->subtractGross(500, 'uses companies car');
         }
 
         return $initialSalary;

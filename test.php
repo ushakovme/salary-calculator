@@ -13,6 +13,9 @@ require 'vendor/autoload.php';
 
 $printer = function (string $description, Salary $salary) {
     echo $description . ':' . PHP_EOL;
+    echo 'Log: ' . PHP_EOL;
+    echo '- ' . implode(PHP_EOL . '- ', $salary->getLog()) . PHP_EOL;
+    echo 'Result: ' . PHP_EOL;
     echo '- Gross: ' . $salary->getGross() . PHP_EOL;
     echo '- Tax: ' . $salary->getTax() . '%' . PHP_EOL;
     echo '- Net pay: ' . $salary->getNetPay() . PHP_EOL;

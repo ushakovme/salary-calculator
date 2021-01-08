@@ -11,8 +11,8 @@ use App\Salary\SalaryCalculator;
 
 require 'vendor/autoload.php';
 
-$printer = function (string $name, Salary $salary) {
-    echo $name . ':' . PHP_EOL;
+$printer = function (string $description, Salary $salary) {
+    echo $description . ':' . PHP_EOL;
     echo '- Gross: ' . $salary->getGross() . PHP_EOL;
     echo '- Tax: ' . $salary->getTax() . '%' . PHP_EOL;
     echo '- Net pay: ' . $salary->getNetPay() . PHP_EOL;
